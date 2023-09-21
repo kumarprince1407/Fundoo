@@ -78,35 +78,49 @@ const TakeNote2 = () => {
             }}
           />
         </Box>
-        <Box>
-          <IconButton>
-            <AddAlertOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <PersonAddAltOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <ColorLensOutlinedIcon />
-          </IconButton>
+        <Box
+          sx={{
+            display: "flex",
 
-          <IconButton>
-            <ImageOutlinedIcon />
-          </IconButton>
+            flexDirection: "row",
 
-          <IconButton>
-            <ArchiveOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <MoreVertOutlinedIcon />
-          </IconButton>
-          <IconButton>
-            <UTurnLeftRoundedIcon />
-          </IconButton>
-          <IconButton></IconButton>
-          <IconButton>
-            <UTurnRightRoundedIcon />
-          </IconButton>
-          <IconButton>Close</IconButton>
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box sx={{ flexGrow: 1 }}>
+            {/*Read about it*/}
+            <IconButton>
+              <AddAlertOutlinedIcon />
+            </IconButton>
+            <IconButton>
+              <PersonAddAltOutlinedIcon />
+            </IconButton>
+            <IconButton>
+              <ColorLensOutlinedIcon />
+            </IconButton>
+
+            <IconButton>
+              <ImageOutlinedIcon />
+            </IconButton>
+
+            <IconButton>
+              <ArchiveOutlinedIcon />
+            </IconButton>
+            <IconButton>
+              <MoreVertOutlinedIcon />
+            </IconButton>
+            <IconButton>
+              <UTurnLeftRoundedIcon />
+            </IconButton>
+            <IconButton></IconButton>
+            <IconButton>
+              <UTurnRightRoundedIcon />
+            </IconButton>
+          </Box>
+          <Box>
+            <IconButton>Close</IconButton>
+          </Box>
         </Box>
       </Box>
     </Container>
