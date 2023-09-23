@@ -100,6 +100,7 @@ const Drawer = styled(MuiDrawer, {
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
+    marginTop: `64px`, // Add a marginTop to push it below the AppBar
   }),
   ...(!open && {
     ...closedMixin(theme),
@@ -110,7 +111,7 @@ const Drawer = styled(MuiDrawer, {
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: "rgba(128, 128, 128, 0.25)", // Change this line to set the background color to gray
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
@@ -142,7 +143,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "75ch",
     },
   },
 }));
@@ -258,9 +259,9 @@ export default function MiniDrawer2() {
 
   //
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", color: "white" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: "white" }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -269,12 +270,18 @@ export default function MiniDrawer2() {
             edge="start"
             sx={{
               marginRight: 5,
+              color: "white",
               ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ color: "gray" }}
+          >
             Keep
           </Typography>
           <Search>
@@ -284,21 +291,18 @@ export default function MiniDrawer2() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              sx={{ color: "gray" }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
+            <IconButton size="large" aria-label="show 4 new mails" color="gray">
               <RefreshIcon />
             </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
-              color="inherit"
+              color="gray"
             >
               <ViewStreamIcon />
             </IconButton>
@@ -309,7 +313,7 @@ export default function MiniDrawer2() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
+              color="gray"
             >
               <SettingsIcon />
             </IconButton>

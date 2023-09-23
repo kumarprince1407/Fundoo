@@ -7,25 +7,30 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { signUp } from "../services/userService";
 import { Link } from "react-router-dom";
 
+//To check validation
 const Signup = () => {
   const userNameRegex = /^[a-z]{3,}(.[0-9a-z]*)?@([a-z]){2,}.[a-z]+(.in)*$/;
   const passwordRegex = /^.*(?=.{8,})(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*$/;
   const nameRegex = /^[A-Z]{1}[a-z]{2,}$/;
 
   const [data, setData] = useState({
-    userName: "",
-    signupPassword: "",
-    signupConfirmPassword: "",
+    // userName: "",
+    // signupPassword: "",
+    // signupConfirmPassword: "",
     //
     firstName: "",
     lastName: "",
-    service: "advance",
+    service: "advance", //read about it - related to backend
     email: "",
     password: "",
     confirmPassword: "",
   });
 
   const [error, setError] = useState({
+    fNameTrue: false,
+    fNameError: "",
+    lNameTrue: false,
+    lNameError: "",
     userNameTrue: false,
     userNameError: "",
     PasswordTrue: false,
@@ -43,7 +48,7 @@ const Signup = () => {
 
     let fNameTesting = nameRegex.test(data.firstName);
     let lNametesting = nameRegex.test(data.lastName);
-    let userNameTesting = userNameRegex.test(data.userName);
+    let userNameTesting = userNameRegex.test(data.email);
     let passwordTesting = passwordRegex.test(data.signupPassword);
 
     if (fNameTesting === false) {

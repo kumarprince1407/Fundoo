@@ -1,6 +1,6 @@
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 
-import React from "react";
+import React, { useState } from "react";
 
 import {
   FormControlLabel,
@@ -19,10 +19,33 @@ import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import UTurnLeftRoundedIcon from "@mui/icons-material/UTurnLeftRounded";
 import UTurnRightRoundedIcon from "@mui/icons-material/UTurnRightRounded";
+import { createNotes } from "../services/noteService";
 
-const TakeNote2 = () => {
+const TakeNote2 = ({ onClose }) => {
+  //Adding functionality for Close button
+  //To close the TakeNote2 container upon clicking the "Close" IconButton,
+  // we can add a state variable to control the visibility of TakeNote2.
+  //
+  const [isVisible, setIsVisible] = useState(true);
+  //
+  const handleNoteClose = async () => {
+    //call create note
+    const note = await createNotes(data);
+    console.log(note);
+    setIsVisible(false);
+    onClose(); //Notify the parent component about the closure
+  };
+
+  //Initialize state variables using the useState hook for data
+  const [data, setData] = useState({ title: "", description: "" });
+
+  const change = (e) => {
+    setData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
   return (
-    <Container maxWidth="sm">
+    //Render only if isVisible is true
+    <Container sx={{ width: "600px" }}>
       <Box
         sx={{
           display: "flex",
@@ -31,6 +54,7 @@ const TakeNote2 = () => {
           border: "1px solid gray",
           borderRadius: 2,
           padding: 2,
+          width: "580px",
         }}
       >
         <Box
@@ -43,9 +67,24 @@ const TakeNote2 = () => {
             alignItems: "center",
           }}
         >
-          <Typography variant="body1">Title</Typography>
-          <IconButton>
+          <InputBase
+            id="title"
+            placeholder="Title"
+            variant="outlined"
+            fullWidth
+            onChange={change}
+            InputProps={{
+              style: {
+                // Remove the outline
+                border: "none",
+              },
+            }}
+          />
+          <IconButton onClick={() => onClose(false)}>
+            {/*Calling handleNoteClose to close the note*/}
             <FormControlLabel control={<PushPinOutlinedIcon />} />
+            {/* FormControlLabel: It is a Material-UI component that provides a 
+            label associated with a form control element. */}
           </IconButton>
         </Box>
         <Box
@@ -66,10 +105,11 @@ const TakeNote2 = () => {
         >
           {/* Using InputBase instead of TextField to remove the border from the text field. */}
           <InputBase
-            id="outlined-basic"
+            id="description"
             placeholder="Take a note..."
             variant="outlined"
             fullWidth
+            onChange={change}
             InputProps={{
               style: {
                 // Remove the outline
@@ -119,12 +159,12 @@ const TakeNote2 = () => {
             </IconButton>
           </Box>
           <Box>
-            <IconButton>Close</IconButton>
+            <IconButton onClick={handleNoteClose}>Close</IconButton>
           </Box>
         </Box>
       </Box>
     </Container>
-  );
+  ); //Render nothing if isVisible is false
 };
 
 export default TakeNote2;
