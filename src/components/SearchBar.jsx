@@ -15,11 +15,18 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import ViewStreamOutlinedIcon from "@mui/icons-material/ViewStreamOutlined";
+import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
+import { Settings } from "@mui/icons-material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  // backgroundColor: "bg-paper",
+  // color: "gray",
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
@@ -43,7 +50,15 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: "black", // Change the text color to black
+  // backgroundColor: "gray",
+  opacity: "1",
+  borderRadius: "5px",
+  width: "700px",
+  marginLeft: "50px",
+  height: "35px",
+  boxShadow:
+    " 0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -56,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function SearchBar({ handleToggle, toggleViewType }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -133,9 +148,7 @@ export default function PrimarySearchAppBar() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
+          <NotificationsIcon />
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
@@ -157,27 +170,43 @@ export default function PrimarySearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ background: "white" }}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={() => handleToggle()}
           >
-            <MenuIcon />
+            <MenuIcon style={{ color: "gray" }} />
           </IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{
+              display: {
+                color: "gray",
+                display: "flex",
+                alignItems: "center",
+              },
+            }}
           >
-            MUI
+            <img
+              className="gb_Rc gb_Rd"
+              src="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png"
+              srcSet="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png 1x, https://www.gstatic.com/images/branding/product/2x/keep_2020q4_48dp.png 2x "
+              alt=""
+              aria-hidden="true"
+              role="presentation"
+              style={{ width: "40px", height: "40px" }}
+            />
+            Keep
           </Typography>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon style={{ color: "gray", marginLeft: "50px" }} />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
@@ -191,18 +220,29 @@ export default function PrimarySearchAppBar() {
               aria-label="show 4 new mails"
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
+              <RefreshRoundedIcon style={{ color: "gray" }} />
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={toggleViewType} //Toggle the type when clicked
+            >
+              <ViewStreamOutlinedIcon style={{ color: "gray" }} />
             </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <SettingsRoundedIcon style={{ color: "gray" }} />
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <AppsRoundedIcon style={{ color: "gray" }} />
             </IconButton>
             <IconButton
               size="large"
@@ -213,7 +253,7 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle style={{ color: "gray" }} />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -225,7 +265,7 @@ export default function PrimarySearchAppBar() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MoreIcon style={{ color: "gray" }} />
             </IconButton>
           </Box>
         </Toolbar>

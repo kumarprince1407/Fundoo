@@ -1,36 +1,59 @@
 import axios from "axios";
 
-const token = localStorage.getItem("token");
+let headerConfig;
+function checkAuth() {
+  //Passes the token in header to authenticate
+  return (headerConfig = {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+}
+
+//Pass using header
 
 export const createNotes = async (data) => {
-  try {
-    console.log("in service", data, token);
-
-    const response = await axios.post(
-      "http://fundoonotes.incubation.bridgelabz.com/api/notes/addNotes",
-      data,
-      {
-        params: { access_token: token },
-      }
-    );
-    console.log("Response from createNotes:", response); // Log the response
-    return response.data;
-  } catch (error) {
-    console.log("Error catching note:", error);
-    throw error;
-  }
+  const response = await axios.post(
+    "http://fundoonotes.incubation.bridgelabz.com/api/notes/addNotes",
+    data,
+    checkAuth()
+  );
+  console.log("Response from createNotes:", response); // Log the response
+  return response;
 };
+
 export const fetchNotes = async () => {
-  try {
-    const response = await axios.get(
-      "http://fundoonotes.incubation.bridgelabz.com/api/notes/getNotesList",
-      {
-        params: { access_token: token },
-      }
-    );
-    return response;
-  } catch (error) {
-    console.log("Error fetching notes:", error);
-    throw error;
-  }
+  const response = await axios.get(
+    "http://fundoonotes.incubation.bridgelabz.com/api/notes/getNotesList",
+    checkAuth()
+  );
+  return response;
+};
+
+export const deleteItem = async (data) => {
+  console.log(data);
+  let response = await axios.post(
+    "http://fundoonotes.incubation.bridgelabz.com/api/notes/trashNotes",
+    data,
+    checkAuth()
+  );
+  return response;
+};
+
+export const archiveItem = async (data) => {
+  let response = await axios.post(
+    "http://fundoonotes.incubation.bridgelabz.com/api/notes/archiveNotes",
+    data,
+    checkAuth()
+  );
+  return response;
+};
+
+export const changeColor = async (data) => {
+  let response = await axios.post(
+    "http://fundoonotes.incubation.bridgelabz.com/api/notes/changesColorNotes",
+    data,
+    checkAuth()
+  );
+  return response;
 };

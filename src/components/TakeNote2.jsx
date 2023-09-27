@@ -1,6 +1,7 @@
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 
 import React, { useState } from "react";
+// import MoreOptions from "./MoreOptions";
 
 import {
   FormControlLabel,
@@ -21,26 +22,27 @@ import UTurnLeftRoundedIcon from "@mui/icons-material/UTurnLeftRounded";
 import UTurnRightRoundedIcon from "@mui/icons-material/UTurnRightRounded";
 import { createNotes } from "../services/noteService";
 
-const TakeNote2 = ({ onClose }) => {
-  //Adding functionality for Close button
-  //To close the TakeNote2 container upon clicking the "Close" IconButton,
-  // we can add a state variable to control the visibility of TakeNote2.
-  //
-  const [isVisible, setIsVisible] = useState(true);
-  //
-  const handleNoteClose = async () => {
-    //call create note
-    const note = await createNotes(data);
-    console.log(note);
-    setIsVisible(false);
-    onClose(); //Notify the parent component about the closure
-  };
-
+const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
   //Initialize state variables using the useState hook for data
   const [data, setData] = useState({ title: "", description: "" });
 
+  //Adding functionality for Close button
+  //To close the TakeNote2 container upon clicking the "Close" IconButton,
+  // we can add a state variable to control the visibility of TakeNote2.
+
   const change = (e) => {
     setData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleNoteClose = async () => {
+    if (data.title === "" && data.description === "") {
+      return setShowTakeNote1(true);
+    }
+    //call create note
+    const note = await createNotes(data);
+    console.log(note);
+    setShowTakeNote1(true);
+    // onClose(); //Notify the parent component about the closure
   };
 
   return (
@@ -147,9 +149,9 @@ const TakeNote2 = ({ onClose }) => {
             <IconButton>
               <ArchiveOutlinedIcon />
             </IconButton>
-            <IconButton>
+            {/* <IconButton>
               <MoreVertOutlinedIcon />
-            </IconButton>
+            </IconButton> */}
             <IconButton>
               <UTurnLeftRoundedIcon />
             </IconButton>
