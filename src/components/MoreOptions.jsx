@@ -10,6 +10,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { deleteItem } from "../services/noteService";
 
 const MoreOptions = ({ noteId, updateData }) => {
@@ -44,14 +45,14 @@ const MoreOptions = ({ noteId, updateData }) => {
         >
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={350}>
-              <Paper sx={{ borderRadius: "10px" }}>
+              <Paper sx={{ borderRadius: "1px" }}>
                 <Typography sx={{ p: 2 }} component={"span"}>
                   <Box
                     sx={{
                       bgcolor: "background.paper",
                       display: "flex",
                       alignItems: "center",
-                      height: 150,
+                      height: 20,
                     }}
                   >
                     <List>
@@ -68,7 +69,7 @@ const MoreOptions = ({ noteId, updateData }) => {
                           />
                         </ListItemButton>
                       </ListItem>
-                      <ListItem disablePadding>
+                      {/* <ListItem disablePadding>
                         <ListItemButton sx={{ textAlign: "left" }}>
                           <ListItemText
                             primary="Add label"
@@ -77,8 +78,8 @@ const MoreOptions = ({ noteId, updateData }) => {
                             }}
                           />
                         </ListItemButton>
-                      </ListItem>
-                      <ListItem disablePadding>
+                      </ListItem> */}
+                      {/* <ListItem disablePadding>
                         <ListItemButton sx={{ textAlign: "left" }}>
                           <ListItemText
                             primary="Make a copy"
@@ -87,8 +88,8 @@ const MoreOptions = ({ noteId, updateData }) => {
                             }}
                           />
                         </ListItemButton>
-                      </ListItem>
-                      <ListItem disablePadding>
+                      </ListItem> */}
+                      {/* <ListItem disablePadding>
                         <ListItemButton sx={{ textAlign: "left" }}>
                           <ListItemText
                             primary="Hide Checkboxes"
@@ -97,7 +98,7 @@ const MoreOptions = ({ noteId, updateData }) => {
                             }}
                           />
                         </ListItemButton>
-                      </ListItem>
+                      </ListItem> */}
                     </List>
                   </Box>
                 </Typography>
@@ -106,7 +107,7 @@ const MoreOptions = ({ noteId, updateData }) => {
           )}
         </Popper>
         <IconButton size="small" onClick={handleClick("bottom-start")}>
-          <MoreVertIcon fontSize="12px" />
+          <DeleteOutlinedIcon fontSize="20px" />
         </IconButton>
       </Box>
     </React.Fragment>

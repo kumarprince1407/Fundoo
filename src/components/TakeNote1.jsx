@@ -5,7 +5,6 @@ import Paper from "@mui/material/Paper";
 
 // useState: To achieve conditional rendering: TakeNote1->TakeNote2
 
-//To remove the outline of the TextField component in Material-UI, you can use the classes prop and override the default styles.
 import {
   TextField,
   Checkbox,
@@ -14,13 +13,13 @@ import {
   Box,
   Container,
   InputAdornment,
-  makeStyles,
-  InputBase, //to remove the outline of TextField
+  InputBase,
 } from "@mui/material";
 
 import { BrushOutlined } from "@mui/icons-material";
 import ImageOutlined from "@mui/icons-material/ImageOutlined";
 
+//TakeNote1 functional component that receives handleSwitch as a prop.
 const TakeNote1 = ({ handleSwitch }) => {
   //handle the state of the checkbox
   const [checked, setChecked] = useState(true);
@@ -35,6 +34,7 @@ const TakeNote1 = ({ handleSwitch }) => {
           flexDirection: "row",
           maxWidth: "lg",
           width: "100%",
+          marginLeft: "10px",
         }}
       >
         <Paper
@@ -42,7 +42,7 @@ const TakeNote1 = ({ handleSwitch }) => {
           sx={{
             display: "flex",
             alignItems: "center",
-            width: "600px",
+            width: "580px",
             borderRadius: "4px",
             padding: "8px",
           }}

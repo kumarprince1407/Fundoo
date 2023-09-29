@@ -21,18 +21,49 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import UTurnLeftRoundedIcon from "@mui/icons-material/UTurnLeftRounded";
 import UTurnRightRoundedIcon from "@mui/icons-material/UTurnRightRounded";
 import { createNotes } from "../services/noteService";
+import ColorPalette from "./ColourPalette"; // Updated import
+import TakeNote3 from "./TakeNote3";
 
-const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
-  //Initialize state variables using the useState hook for data
-  const [data, setData] = useState({ title: "", description: "" });
+//The TakeNote2 functional component, which receives several props:
+// onClose, noteData, setNodeData,setShowTakeNote1,updateDashboardWithNewNote,and updatecolor.
+const TakeNote2 = ({
+  onClose,
+  noteData,
+  getNotes,
+  setNodeData,
+  setShowTakeNote1,
+  updateDashboardWithNewNote,
 
-  //Adding functionality for Close button
-  //To close the TakeNote2 container upon clicking the "Close" IconButton,
-  // we can add a state variable to control the visibility of TakeNote2.
+  updatecolor, // Receive setCurrentColor function as a prop
+}) => {
+  // the useState hook is used to initialize a piece of local state within the TakeNote2 component.
+  // The state variable is named data, and it is initially set to an object with three properties:
+  // title, description, and color
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+    color: "", //Initialize color in the data state
+  });
+
+  //This function 'change' is used to update the data state based on the input fields.
+  // It utilizes the spread operator to update the specific property (title or description)
+  // based on the id of the input field that triggered the change event
 
   const change = (e) => {
+    //(prev) is a function argument that represents the previous state.
+    //This is a common pattern when using the useState hook to update state based on the previous state.
     setData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    // { ...prev, [e.target.id]: e.target.value } is an object that represents the new state.
+    //  It uses the spread operator (...prev) to copy all properties from the previous
+    //  state (prev) into a new object. Additionally, it updates a specific property based on
+    // the e.target.id and e.target.value values.
   };
+
+  // The function handleNoteClose is called when the user closes the note.
+  // It performs the following actions: Checks if both the title and description are empty.
+  // If so, it sets ShowTakeNote1 to true to return to TakeNote1. Calls the createNotes function
+  // from the service module to create a new note using the data state.
+  // Logs the note to the console.Sets ShowTakeNote1 to true to return to TakeNote1.
 
   const handleNoteClose = async () => {
     if (data.title === "" && data.description === "") {
@@ -40,13 +71,24 @@ const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
     }
     //call create note
     const note = await createNotes(data);
+    //await is used to wait for the createNotes function to complete its execution
+    // and return a result. The result is assigned to the variable note
     console.log(note);
+
+    // Calling the Callback function to update the dashboard
+    updateDashboardWithNewNote(note.data.data);
+
     setShowTakeNote1(true);
-    // onClose(); //Notify the parent component about the closure
+    window.location.reload();
+  };
+
+  //Function to handle colour change
+  const handleColorChange = (newColor) => {
+    // Update the 'color' property in the 'data' state
+    setData((prevState) => ({ ...prevState, color: newColor }));
   };
 
   return (
-    //Render only if isVisible is true
     <Container sx={{ width: "600px" }}>
       <Box
         sx={{
@@ -57,6 +99,7 @@ const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
           borderRadius: 2,
           padding: 2,
           width: "580px",
+          backgroundColor: data.color, // Apply the current color to the container
         }}
       >
         <Box
@@ -75,6 +118,10 @@ const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
             variant="outlined"
             fullWidth
             onChange={change}
+            // event handler for the onChange event of the input field. When a user types
+            //  or changes the content of the input field, this function is called.
+            //  It takes the event e as an argument, which represents the input event.
+            //   When called, it updates the data state using the setData function.
             InputProps={{
               style: {
                 // Remove the outline
@@ -82,7 +129,7 @@ const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
               },
             }}
           />
-          <IconButton onClick={() => onClose(false)}>
+          <IconButton onClick={() => setShowTakeNote1(false)}>
             {/*Calling handleNoteClose to close the note*/}
             <FormControlLabel control={<PushPinOutlinedIcon />} />
             {/* FormControlLabel: It is a Material-UI component that provides a 
@@ -111,7 +158,7 @@ const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
             placeholder="Take a note..."
             variant="outlined"
             fullWidth
-            onChange={change}
+            onChange={(e) => setData({ ...data, description: e.target.value })}
             InputProps={{
               style: {
                 // Remove the outline
@@ -139,7 +186,13 @@ const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
               <PersonAddAltOutlinedIcon />
             </IconButton>
             <IconButton>
-              <ColorLensOutlinedIcon />
+              <ColorPalette
+                fontSize="12px"
+                action={"create"}
+                noteId={noteData}
+                updatecolor={handleColorChange} // Pass the color change handler
+                setNotes={setData} //Passing the setNotes function
+              />
             </IconButton>
 
             <IconButton>
@@ -149,9 +202,7 @@ const TakeNote2 = ({ onClose, noteData, setNodeData, setShowTakeNote1 }) => {
             <IconButton>
               <ArchiveOutlinedIcon />
             </IconButton>
-            {/* <IconButton>
-              <MoreVertOutlinedIcon />
-            </IconButton> */}
+
             <IconButton>
               <UTurnLeftRoundedIcon />
             </IconButton>

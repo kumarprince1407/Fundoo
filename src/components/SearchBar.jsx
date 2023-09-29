@@ -21,6 +21,7 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import ViewStreamOutlinedIcon from "@mui/icons-material/ViewStreamOutlined";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import { Settings } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -95,6 +96,14 @@ export default function SearchBar({ handleToggle, toggleViewType }) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  //Log out
+  const navigate = useNavigate();
+  let onLogOut = () => {
+    localStorage.removeItem("token");
+
+    navigate("/");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -112,8 +121,8 @@ export default function SearchBar({ handleToggle, toggleViewType }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
+      <MenuItem onClick={onLogOut}>Log Out</MenuItem>
     </Menu>
   );
 

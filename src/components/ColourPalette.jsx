@@ -8,6 +8,8 @@ import Paper from "@mui/material/Paper";
 import { IconButton } from "@mui/material";
 import { changeColor } from "../services/noteService";
 
+// functional component named ColorPalette that receives several props:
+// action, noteId, setNotes, and updatecolor
 export default function ColorPalette({
   action,
   noteId,
@@ -16,16 +18,26 @@ export default function ColorPalette({
 }) {
   // console.log(action)
 
+  //Initializing state variables using the React useState hook
+  //These state variables are used to manage the position and visibility of a popper component.
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
 
+  //Defining the function handleClick that opens/closes the color palette popper:(READ)
+  //This function is called when the color palette icon is clicked.
+  //It toggles the visibility of the popper.
   const handleClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
   };
 
+  // Function selectColor that handles color selection.
+  //This function is called when a color is clicked in the color palette.
+  // It checks the action prop and either sets the color for a new note
+  //creation (action === "create") or updates the color of an existing
+  //note (action === "edit"). It also closes the popper and logs the response.
   const selectColor = async (color) => {
     if (action === "create") {
       setNotes((prevState) => ({ ...prevState, color: color }));
@@ -33,7 +45,7 @@ export default function ColorPalette({
     } else if (action === "edit") {
       let data = { noteIdList: [noteId], color: color };
       let response = await changeColor(data);
-      updatecolor();
+      updatecolor(color);
       setOpen(false);
       console.log(response);
       // setNotes((prevState)=>({...prevState, color:color}))
@@ -55,7 +67,7 @@ export default function ColorPalette({
     "#F5B041",
   ];
 
-  //  const open = Boolean(anchorEl);
+  // Defining id for the popper:
   const id = open ? "simple-popper" : undefined;
 
   return (

@@ -79,7 +79,7 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  zIndex: "-1",
+  // zIndex: "-1",
 
   ...(open && {
     ...openedMixin(theme),
@@ -92,7 +92,13 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer2({ open }) {
+//Sept30
+export default function MiniDrawer2({
+  open,
+  onArchiveClick,
+  onDeleteClick,
+  onIconClick,
+}) {
   const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -117,7 +123,7 @@ export default function MiniDrawer2({ open }) {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-
+  //sept29
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -213,6 +219,7 @@ export default function MiniDrawer2({ open }) {
             {
               title: "Notes",
               icon: <LightbulbOutlinedIcon style={{ color: "gray" }} />,
+              click: onIconClick,
             },
             {
               title: "Reminders",
@@ -224,15 +231,27 @@ export default function MiniDrawer2({ open }) {
             },
             {
               title: "Archive",
-              icon: <ArchiveOutlinedIcon style={{ color: "gray" }} />,
+              icon: (
+                <ArchiveOutlinedIcon
+                  style={{ color: "gray" }}
+                  // onClick={onArchiveClick}
+                />
+              ),
+              click: onArchiveClick,
             },
             {
               title: "Bin",
-              icon: <DeleteOutlineOutlinedIcon style={{ color: "gray" }} />,
+              icon: (
+                <DeleteOutlineOutlinedIcon
+                  style={{ color: "gray" }}
+                  // onClick={onDeleteClick}
+                />
+              ),
+              click: onDeleteClick,
             },
-          ].map(({ title, icon }) => (
+          ].map(({ title, icon, click }) => (
             <ListItem key={title} disablePadding sx={{ display: "block" }}>
-              <ListItemButton style={{ color: "gray" }}>
+              <ListItemButton style={{ color: "gray" }} onClick={click}>
                 <IconButton size="large" disabled>
                   {icon}
                 </IconButton>
@@ -241,8 +260,6 @@ export default function MiniDrawer2({ open }) {
             </ListItem>
           ))}
         </List>
-        {/* // */}
-        {/* <Divider /> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

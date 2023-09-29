@@ -13,10 +13,9 @@ const Router = () => {
     // Within the Router component, we create a BrowserRouter. This component provides the routing
     // infrastructure for our application and should wrap all our route definitions.
     <BrowserRouter>
-      {/* Within the Router component, we create a BrowserRouter. This component provides the routing
-    infrastructure for our application and should wrap all your route definitions. */}
       <Routes>
         {/* Defining the route for the root URL ("/") using the <Route> component */}
+
         <Route
           path="/"
           element={
@@ -45,5 +44,13 @@ const Router = () => {
     </BrowserRouter>
   );
 };
+
+// Routes is a container component that is used to define multiple route configurations for
+// our application. It allows yus to group multiple Route components together and specify
+//  different routes for different parts of our application.
+
+// We typically use Routes at the top level of our routing configuration to define the overall
+// structure of your routes. Within Routes, we can nest Route components to define the specific
+//  routes for different parts of your application.
 
 export default Router;
