@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { styled, useTheme, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -39,6 +40,7 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import "./Drawer2.css";
 
 const drawerWidth = 240;
 
@@ -198,7 +200,13 @@ export default function MiniDrawer2({
     </Menu>
   );
   //
+  // Maintain selected item state
+  const [selectedTitle, setSelectedTitle] = useState("Notes"); // To change color
 
+  // Function to handle item click
+  const handleItemClick = (title) => {
+    setSelectedTitle(title);
+  };
   //
   return (
     <Box sx={{ display: "flex", color: "white" }}>
@@ -219,15 +227,26 @@ export default function MiniDrawer2({
             {
               title: "Notes",
               icon: <LightbulbOutlinedIcon style={{ color: "gray" }} />,
-              click: onIconClick,
+              click: () => {
+                handleItemClick("Notes"); // Update selected item
+                onIconClick(); // Call your click handler
+              },
             },
             {
               title: "Reminders",
               icon: <NotificationsNoneOutlinedIcon style={{ color: "gray" }} />,
+              click: () => {
+                handleItemClick("Reminders"); // Update selected item
+                onIconClick(); // Call your click handler
+              },
             },
             {
               title: "Edit Lables",
               icon: <CreateOutlinedIcon style={{ color: "gray" }} />,
+              click: () => {
+                handleItemClick("Edit Lables"); // Update selected item
+                onIconClick(); // Call your click handler
+              },
             },
             {
               title: "Archive",
@@ -237,7 +256,10 @@ export default function MiniDrawer2({
                   // onClick={onArchiveClick}
                 />
               ),
-              click: onArchiveClick,
+              click: () => {
+                handleItemClick("Archive"); // Update selected item
+                onArchiveClick(); // Call your click handler
+              },
             },
             {
               title: "Bin",
@@ -247,11 +269,22 @@ export default function MiniDrawer2({
                   // onClick={onDeleteClick}
                 />
               ),
-              click: onDeleteClick,
+              click: () => {
+                handleItemClick("Bin"); // Update selected item
+                onDeleteClick(); // Call your click handler
+              },
             },
           ].map(({ title, icon, click }) => (
             <ListItem key={title} disablePadding sx={{ display: "block" }}>
-              <ListItemButton style={{ color: "gray" }} onClick={click}>
+              <ListItemButton
+                style={{ color: "gray" }}
+                onClick={click}
+                className={
+                  title === selectedTitle
+                    ? "list-item-button selected"
+                    : "list-item-button"
+                }
+              >
                 <IconButton size="large" disabled>
                   {icon}
                 </IconButton>

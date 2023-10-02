@@ -1,17 +1,21 @@
-//Function currying
+//take an array of elements and print the values of each element of the array after every 3 seconds
+const array1 = [
+  "apple",
+  "orange",
+  "mango",
+  "banana",
+  "pineapple",
+  "strawberry",
+  "guava",
+  "litchi",
+];
+let index = 0;
 
-//Original function
-function product(x, y) {
-  return x * y;
+function printArray() {
+  if (index < array1.length) {
+    console.log(`Element ${[index + 1]} : ${array1[index]}`);
+    index++;
+    setTimeout(printArray, 3000);
+  }
 }
-
-//Applying currying to the above function
-function curryProduct(x) {
-  return function (y) {
-    return x * y;
-  };
-}
-
-//We need to pass only one argument in the new function
-const newProduct = curryProduct(2);
-console.log(`New Product: ${newProduct(4)}`);
+printArray(index);

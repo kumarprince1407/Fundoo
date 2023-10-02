@@ -24,7 +24,7 @@ import { Settings } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
-  position: "relative",
+  position: "sticky",
   borderRadius: theme.shape.borderRadius,
   // backgroundColor: "bg-paper",
   // color: "gray",
@@ -177,8 +177,16 @@ export default function SearchBar({ handleToggle, toggleViewType }) {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box
+      sx={{
+        flexGrow: 1,
+        position: "sticky",
+        backgroundColor: "white",
+        zIndex: 2,
+      }}
+    >
+      {/* <AppBar position="static"> */}
+      <AppBar>
         <Toolbar sx={{ background: "white" }}>
           <IconButton
             size="large"
