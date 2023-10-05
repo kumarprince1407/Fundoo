@@ -1,3 +1,4 @@
+//MoreOptions.jsx
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Popper from "@mui/material/Popper";
@@ -13,7 +14,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { deleteItem } from "../services/noteService";
 
-const MoreOptions = ({ noteId, updateData }) => {
+const MoreOptions = ({ noteId, updateData, showDeleted, deleteForever }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState();
@@ -25,11 +26,19 @@ const MoreOptions = ({ noteId, updateData }) => {
   };
 
   const id = open ? "simple-popper" : undefined;
+
   const onDeleteItem = async () => {
     console.log(noteId);
-    let data = { noteIdList: [noteId], isDeleted: true };
 
-    await deleteItem(data);
+    if (showDeleted) {
+      //Calling the deleteForever function
+      await deleteForever({ nodeIdList: [noteId] });
+    } else {
+      //Calling the regular deleteItem function
+      let data = { noteIdList: [noteId], isDeleted: true };
+
+      await deleteItem(data);
+    }
     updateData();
   };
 
@@ -62,43 +71,15 @@ const MoreOptions = ({ noteId, updateData }) => {
                           onClick={onDeleteItem}
                         >
                           <ListItemText
-                            primary="Delete Note"
+                            primary={
+                              showDeleted ? "Permanent Delete" : "Delete Note"
+                            }
                             primaryTypographyProps={{
                               fontSize: "0.9rem",
                             }}
                           />
                         </ListItemButton>
                       </ListItem>
-                      {/* <ListItem disablePadding>
-                        <ListItemButton sx={{ textAlign: "left" }}>
-                          <ListItemText
-                            primary="Add label"
-                            primaryTypographyProps={{
-                              fontSize: "0.9rem",
-                            }}
-                          />
-                        </ListItemButton>
-                      </ListItem> */}
-                      {/* <ListItem disablePadding>
-                        <ListItemButton sx={{ textAlign: "left" }}>
-                          <ListItemText
-                            primary="Make a copy"
-                            primaryTypographyProps={{
-                              fontSize: "0.9rem",
-                            }}
-                          />
-                        </ListItemButton>
-                      </ListItem> */}
-                      {/* <ListItem disablePadding>
-                        <ListItemButton sx={{ textAlign: "left" }}>
-                          <ListItemText
-                            primary="Hide Checkboxes"
-                            primaryTypographyProps={{
-                              fontSize: "0.9rem",
-                            }}
-                          />
-                        </ListItemButton>
-                      </ListItem> */}
                     </List>
                   </Box>
                 </Typography>

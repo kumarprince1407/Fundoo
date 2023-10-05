@@ -1,3 +1,4 @@
+//TakeNote3.jsx
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 
 import React, { useState, useEffect } from "react";
@@ -20,10 +21,14 @@ import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import PushPinRoundedIcon from "@mui/icons-material/PushPinRounded";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { archiveItem } from "../services/noteService";
+import {
+  archiveItem,
+  deleteItem,
+  deleteForever,
+} from "../services/noteService";
 
 //The TakeNote3 functional component, which receives three props: noteData, getNotes, and viewType.
-const TakeNote3 = ({ noteData, getNotes, viewType }) => {
+const TakeNote3 = ({ noteData, getNotes, viewType, showDeleted }) => {
   //receiing the viewType prop for conditional rendering:
 
   //Initializing  two state variables, title and description, using the useState hook.
@@ -157,7 +162,12 @@ const TakeNote3 = ({ noteData, getNotes, viewType }) => {
           <ArchiveOutlinedIcon />
         </IconButton>
         <IconButton>
-          <MoreOptions noteId={noteData.id} updateData={getNotes} />
+          <MoreOptions
+            noteId={noteData.id}
+            updateData={getNotes}
+            showDeleted={showDeleted}
+            deleteForever={deleteForever} // Passing deleteForever as a prop
+          />
         </IconButton>
 
         <IconButton></IconButton>

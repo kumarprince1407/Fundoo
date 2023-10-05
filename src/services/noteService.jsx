@@ -1,3 +1,4 @@
+//noteService.jsx
 import axios from "axios";
 //The Axios library, which is a popular JavaScript library for making HTTP requests.
 // Axios is commonly used for making API calls in web applications.
@@ -81,4 +82,15 @@ export const changeColor = async (data) => {
   // ("http://fundoonotes.incubation.bridgelabz.com/api/notes/changesColorNotes") with the
   // provided data and includes authentication headers using the checkAuth() function.
   // It returns the response object.
+};
+
+//permanent delete
+export const deleteForever = async (data) => {
+  console.log("foreverData", data);
+  let response = await axios.post(
+    "http://fundoonotes.incubation.bridgelabz.com/api/notes/deleteForeverNotes",
+    data,
+    checkAuth()
+  );
+  return response;
 };
